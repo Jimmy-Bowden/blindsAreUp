@@ -13,7 +13,7 @@ file.close()
 state = {
     "smallBlind": data[0]['small_blind'],
     "bigBlind": data[0]['big_blind'],
-    "blindDurationMinutes": 1, 
+    "blindDurationMinutes": 30, 
     "pauseTimer": 0, #In seconds
     "currentTimer": 0, #In seconds
     "currentRound": 0,
@@ -50,6 +50,7 @@ def startRound(state):
     state['smallBlind']=data[state['currentRound']]['small_blind']
     state['bigBlind']=data[state['currentRound']]['big_blind']
     state['currentTimer']=state['blindDurationMinutes'] * 60
+    state['pauseTimerFlag']=False
     smallblindText = getSmallBlindText(state)
     bigBlindText = getBigBlindText(state)
 
@@ -60,10 +61,11 @@ def startRound(state):
     countdown(state)
 
 def pauseTimer(state):
-    print("Fix me")
+    state['pauseTimerFlag'] = True
 
 def unpauseTimer(state):
-    print("Fix me")
+    state['pauseTimerFlag'] = False
+    countdown(state)
 
 def nextBlind(state):
     if(state['currentRound'] < state['maxRounds']):
@@ -83,7 +85,7 @@ def previousBlind(state):
 
 def restartBlindTimer(state):
     state['currentTimer'] = state['blindDurationMinutes'] * 60
-    timerLabel.config(text=getCurrentTimerText())
+    timerLabel.config(text=getCurrentTimerText(state))
 
 def restartGame(state):
     state['pauseTimerFlag'] = True
@@ -91,6 +93,7 @@ def restartGame(state):
     state['currentRound'] = 0
     state['smallBlind'] = data[0]["small_blind"]
     state['bigBlind'] = data[0]["big_blind"]
+    state['pauseTimerFlag']=False
     smallBlindLabel.config(text=getSmallBlindText(state))
     bigBlindLabel.config(text=getBigBlindText(state))
 
@@ -135,6 +138,12 @@ startBlindsButton.pack(side = TOP)
 
 restartGameButton = tkinter.Button(buttonFrame, text='Restart Game', width=25, command=lambda: restartGame(state))
 restartGameButton.pack(side = BOTTOM)
+
+pauseButton = tkinter.Button(buttonFrame, text='Pause', width=25, command=lambda: pauseTimer(state))
+pauseButton.pack(side = LEFT)
+
+unpauseButton = tkinter.Button(buttonFrame, text='Unpause', width=25, command=lambda: unpauseTimer(state))
+unpauseButton.pack(side = RIGHT)
 
 master.mainloop()
 
