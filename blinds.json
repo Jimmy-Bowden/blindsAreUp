@@ -1,0 +1,38 @@
+[
+    {
+        "small_blind": 10,
+        "big_blind": 20
+    },
+    {
+        "small_blind": 20,
+        "big_blind": 30
+    },
+    {
+        "small_blind": 30,
+        "big_blind": 50
+    },
+    {
+        "small_blind": 50,
+        "big_blind": 100
+    },
+    {
+        "small_blind": 100,
+        "big_blind": 150
+    },
+    {
+        "small_blind": 150,
+        "big_blind": 200
+    },
+    {
+        "small_blind": 200,
+        "big_blind": 300
+    },
+    {
+        "small_blind": 300,
+        "big_blind": 600
+    },
+    {
+        "small_blind": 500,
+        "big_blind": 1000
+    }
+]
