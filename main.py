@@ -14,12 +14,12 @@ file.close()
 state = {
     "smallBlind": data[0]['small_blind'],
     "bigBlind": data[0]['big_blind'],
-    "blindDurationMinutes": 1, 
+    "blindDurationMinutes": 30, 
     "pauseTimer": 0, #In seconds
     "currentTimer": 0, #In seconds
     "currentRound": 0,
     "maxRounds": len(data),
-    "pauseTimerFlag": False
+    "pauseTimerFlag": False,
 }
 
 
@@ -62,8 +62,15 @@ def startRound(state):
 
     countdown(state)
 
-def pauseTimer(state):
-    state['pauseTimerFlag'] = True
+def tooglePauseTimer(state):
+    if(state['pauseTimerFlag']):
+        state['pauseTimerFlag'] = False
+        pauseButton.config(text="Pause")
+        countdown(state)
+    else:
+        state['pauseTimerFlag'] = True
+        pauseButton.config(text="Unpause")
+        countdown(state)
 
 def unpauseTimer(state):
     state['pauseTimerFlag'] = False
@@ -96,6 +103,7 @@ def restartGame(state):
     state['smallBlind'] = data[0]["small_blind"]
     state['bigBlind'] = data[0]["big_blind"]
     state['pauseTimerFlag']=False
+    pauseButton.config(text="Pause")
     smallBlindLabel.config(text=getSmallBlindText(state))
     bigBlindLabel.config(text=getBigBlindText(state))
 
@@ -141,11 +149,8 @@ startBlindsButton.pack(side = TOP)
 restartGameButton = tkinter.Button(buttonFrame, text='Restart Game', width=25, command=lambda: restartGame(state))
 restartGameButton.pack(side = BOTTOM)
 
-pauseButton = tkinter.Button(buttonFrame, text='Pause', width=25, command=lambda: pauseTimer(state))
+pauseButton = tkinter.Button(buttonFrame, text="Pause", width=25, command=lambda: tooglePauseTimer(state))
 pauseButton.pack(side = LEFT)
-
-unpauseButton = tkinter.Button(buttonFrame, text='Unpause', width=25, command=lambda: unpauseTimer(state))
-unpauseButton.pack(side = RIGHT)
 
 master.mainloop()
 
