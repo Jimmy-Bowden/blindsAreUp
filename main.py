@@ -5,6 +5,7 @@ import json
 import tkinter
 from tkinter import *
 from xml.etree.ElementTree import tostring
+from playsound import playsound
 
 file = open("blinds.json")
 data = json.load(file)
@@ -13,7 +14,7 @@ file.close()
 state = {
     "smallBlind": data[0]['small_blind'],
     "bigBlind": data[0]['big_blind'],
-    "blindDurationMinutes": 30, 
+    "blindDurationMinutes": 1, 
     "pauseTimer": 0, #In seconds
     "currentTimer": 0, #In seconds
     "currentRound": 0,
@@ -43,6 +44,7 @@ def countdown(state):
         state['currentTimer'] -= 1
     
     print("Blinds are up!")
+    playsound('timer.mp3')
     state['currentRound'] += 1
     startRound(state)
 
